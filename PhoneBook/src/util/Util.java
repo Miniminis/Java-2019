@@ -9,5 +9,6 @@ public class Util {
 	public static final int SEARCH = 2;
 	public static final int DELETE = 3; 
 	public static final int ALLINFO = 4;
-	public static final int END = 5;
+	public static final int BASICINFO = 5;
+	public static final int END = 6;
 }
