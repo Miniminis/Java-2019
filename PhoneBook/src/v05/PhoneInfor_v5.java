@@ -1,49 +1,42 @@
-package v04;
+package v05;
 
-//최상위 클래스
-public abstract class PhoneInfor_v4 {
+//메소드 명칭 규칙을 위한 인터페이스 생성 
+interface PhoneInforStorage {
+	void getInfo();
+	void getBasicInfo();
+}
+
+//PhoneInforStorage 인터페이스를 구현하고 있는 추상클래스 PhoneInfor_v5 
+public abstract class PhoneInfor_v5 implements PhoneInforStorage {
 		
+	//외부로부터 변수에 대한 직접접근을 막기 위한 private 제어자
 	private String name;
-	private String phoneNumber;
-	private String address;
-	private String email;
+	private String phoneNumber;	
 	
-	PhoneInfor_v4(
-			String name, 
-			String phoneNumber, 
-			String address, 
-			String email) {
+	PhoneInfor_v5(String name, String phoneNumber) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
-		this.address = address;
-		this.email = email;
 	}
 	
-	void getInfo() {
+	public void getInfo() {
 		System.out.println("이름: "+name);
 		System.out.println("전화번호: "+phoneNumber);
-		System.out.println("주소: "+address);
-		System.out.println("이메일: "+email);
 	}
 	
-	void getBasicInfo() {}
+	abstract public void getBasicInfo();
 	
-	//클래스 내부에 보호된 이름을 통한 검색을 가능하게 하기 위한 매서드
-	////변수의 값을 참조하는 getter method 
+	//클래스 내부에 보호된 이름을 통한 검색을 가능하게 하기 위한 매서드 
 	String getName() {
-		return this.name;
-	}
-	
-	////변수에 값을 대입하는 setter method 
-	void setName(String name) {
-		this.name = name;
+		return name;
 	}
 	
 }
 
 //대학교 친구들 저장을 위한 클래스 생성 
 //기본정보를 PhoneInfor_v4 로부터 상속받음 
-class PhoneUnivInfor extends PhoneInfor_v4 {
+class PhoneUnivInfor extends PhoneInfor_v5 {
+	String address=null;
+	String email=null;
 	String major=null;
 	String year=null;
 	
@@ -54,20 +47,24 @@ class PhoneUnivInfor extends PhoneInfor_v4 {
 			String email, 
 			String major, 
 			String year) {
-		super(name, phoneNumber, address, email); 
+		super(name, phoneNumber);
+		this.address=address;
+		this.email=email;
 		this.major=major;
 		this.year=year;
 	}
 
 	@Override
-	void getInfo() {
+	public void getInfo() {
 		super.getInfo();
+		System.out.println("주소: "+address);
+		System.out.println("이메일 "+email);
 		System.out.println("전공: "+major);
 		System.out.println("학년: "+year);
 	}
 
 	@Override
-	void getBasicInfo() {
+	public void getBasicInfo() {
 		System.out.println("이름: "+super.getName());
 		System.out.println("전화번호: "+super.getName());
 	}
@@ -77,26 +74,29 @@ class PhoneUnivInfor extends PhoneInfor_v4 {
 }
 //회사 친구들 저장을 위한 클래스 생성 
 //기본정보를 PhoneInfor_v4 로부터 상속받음
-class PhoneCompanyInfor extends PhoneInfor_v4 {
+class PhoneCompanyInfor extends PhoneInfor_v5 {
+	String email=null;
 	String company=null;
 	
 	PhoneCompanyInfor(
 			String name, 
 			String phoneNumber, 
-			String address, 
 			String email, 
 			String company) {
-		super(name, phoneNumber, address, email);
+		super(name, phoneNumber);
+		this.email=email;
 		this.company=company;
 	}
+	
 	@Override
-	void getInfo() {
+	public void getInfo() {
 		super.getInfo();
+		System.out.println("이메일: "+email);
 		System.out.println("회사: "+company);
 	}
 	
 	@Override
-	void getBasicInfo() {
+	public void getBasicInfo() {
 		System.out.println("이름: "+super.getName());
 		System.out.println("전화번호: "+super.getName());
 		System.out.println("회사: "+company);
@@ -106,27 +106,25 @@ class PhoneCompanyInfor extends PhoneInfor_v4 {
 
 //가족 정보 저장을 위한 클래스 생성 
 //기본정보를 PhoneInfor_v4 로부터 상속받음
-class PhoneFamilyInfor extends PhoneInfor_v4{
+class PhoneFamilyInfor extends PhoneInfor_v5{
 	String bday=null;
 	
 	PhoneFamilyInfor(
 			String name, 
 			String phoneNumber, 
-			String address, 
-			String email, 
 			String bday) {
-		super(name, phoneNumber, address, email);
+		super(name, phoneNumber);
 		this.bday=bday;
 	}
 	
 	@Override
-	void getInfo() {
+	public void getInfo() {
 		super.getInfo();
 		System.out.println("생일: "+bday);
 	}
 	
 	@Override
-	void getBasicInfo() {
+	public void getBasicInfo() {
 		System.out.println("이름: "+super.getName());
 		System.out.println("전화번호: "+super.getName());
 		System.out.println("생일: "+bday);

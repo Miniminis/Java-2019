@@ -1,45 +1,38 @@
-package v04;
+package v05;
 
 import util.Util;
 
-public class Manager_v4 {
-	public final PhoneInfor_v4[] pb;
-
-	// singleton 처리 전/ main에서 배열의 사이즈 조절이 가능했었다.
+//Util interface를 구현
+public class Manager_v5 implements Util {
+	private static PhoneInfor_v5[] pb;
 	
-	//Manager_v4 () { pb = new PhoneInfor_v4[100]; }
+	//인스턴스 직접참조 및 다수의 인스턴스 생성을 막기 위한 singleton pattern 적용 
+	//s1) 생성자 접근제한  
+	private Manager_v5 () {
+		pb = new PhoneInfor_v5[1000];
+	}
 	
-	private Manager_v4(int size) {
-		pb = new PhoneInfor_v4[size];
-	}
-
-	// singleton pattern 적용
-	// 1) 생성자의 접근 제한: private 생성자()
-	private Manager_v4() {
-		this(100);
-	}
-
-	// 2) 클래스 내부에서 인스턴스 생성, static, private
-	// static: private 으로 접근 제한된 Manager_v4에 어디서든지 참조값을 통해 접근할 수 있도록 함.
-	// private: Manager_v4.m = null; 처럼 외부에서 참조변수를 통해 참조하여 값을 변경하는 것을 막기 위함.
-	static Manager_v4 m = new Manager_v4(1000);
-
-	// 3) 참조값을 반환하는 매서드 생성
-	public static Manager_v4 getInstance() {
-		if (m == null) {
-			m = new Manager_v4();
+	//s2) class 내부변수를 통한 Manager instance 생성 
+	//---> getInstance를 통해서 호출될 수 있도록 static 선언
+	private static Manager_v5 manager = new Manager_v5();
+	
+	//s3) 외부접근을 가능하게 해주는 getInstance 생성 
+	public static Manager_v5 getInstance() {
+		if(manager==null) {
+			manager = new Manager_v5();
 		}
-		return m;
+		return manager;
 	}
-
+	
+	//전화번호부에 저장된 친구의 수를 기록하기위한 변수
 	public static int numOfFriends = 0;
 
 	// 0) 프로그램 메인: 시작페이지
 	public static int startMenu() {
 		System.out.println("**********************************");
-		System.out.println("전화번호부를 시작합니다. ");
+		System.out.println("프로그램을 시작합니다. ");
 		System.out.println("메뉴를 선택해주세요 ");
-		System.out.printf("%d 신규정보등록 \n%d 기존정보검색 \n%d 기존정보삭제 \n%d 전체정보보기 \n%d 기본정보보기 \n%d 나가기\n", Util.INSERT,
+		System.out.printf("%d) 신규정보등록 \n%d) 기존정보검색 \n%d) 기존정보삭제 \n%d) 전체정보보기 \n%d) 기본정보보기 \n%d) 나가기\n", Util.INSERT,
 				Util.SEARCH, Util.DELETE, Util.ALLINFO, Util.BASICINFO, Util.END);
 		System.out.println("**********************************");
 
@@ -49,26 +42,26 @@ public class Manager_v4 {
 	}
 
 	// 1-0)배열에 정보저장용 매서드
-	void storeInfo(PhoneInfor_v4 ph) {
+	void storeInfo(PhoneInfor_v5 ph) {
 		pb[numOfFriends++] = ph;
 		System.out.println("정보가 성공적으로 저장되었습니다. ");
 	}
-
-	// 1-1) 소속 선택
+	
+	//1-1) 소속 선택을 위한 메서드 
 	void deptInput() {
+		System.out.println("신규정보를 등록합니다.");
+		
 		System.out.println("등록하고자하는 사람의 소속을 입력해주세요. ");
-		System.out.println("1) 가족 \n2) 대학교 \n3) 회사");
+		System.out.printf("%d) 가족 \n%d) 대학교 \n%d) 회사", Util.FMILY, Util.UNIVERSITY, Util.COMPANY);
 		int deptChoice = Util.keyboard.nextInt();
 		Util.keyboard.nextLine(); // 개행
-
+		
 		inputInfo(deptChoice);
-
 	}
 
-	// 1) 신규정보등록:
+	// 1) 신규정보등록
 	void inputInfo(int deptChoice) {
-		System.out.println("신규정보를 등록합니다.");
-
+		
 		System.out.println("등록하고자하는 사람의 이름을 입력해주세요.");
 		String name = Util.keyboard.nextLine();
 
@@ -82,13 +75,13 @@ public class Manager_v4 {
 		String email = Util.keyboard.nextLine();
 
 		switch (deptChoice) {
-		case 1: // 가족
+		case Util.FMILY: // 가족
 			System.out.println("등록하고자하는 사람의 생일을 입력해주세요. ");
 			String bday = Util.keyboard.nextLine();
 
-			storeInfo(new PhoneFamilyInfor(name, phoneNumber, address, email, bday));
+			storeInfo(new PhoneFamilyInfor(name, phoneNumber, bday));
 			return;
-		case 2: // 대학교
+		case Util.UNIVERSITY: // 대학교
 			System.out.println("등록하고자하는 사람의 전공을 입력해주세요. ");
 			String major = Util.keyboard.nextLine();
 
@@ -97,11 +90,11 @@ public class Manager_v4 {
 
 			storeInfo(new PhoneUnivInfor(name, phoneNumber, address, email, major, year));
 			return;
-		case 3: // 회사
+		case Util.COMPANY: // 회사
 			System.out.println("등록하고자하는 사람의 회사를 입력해주세요. ");
 			String company = Util.keyboard.nextLine();
 
-			storeInfo(new PhoneCompanyInfor(name, phoneNumber, address, email, company));
+			storeInfo(new PhoneCompanyInfor(name, phoneNumber, email, company));
 			return;
 		default: // 예외
 			System.out.println("올바른 소속 번호를 입력해주세요. ");
