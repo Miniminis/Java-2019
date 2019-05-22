@@ -1,11 +1,11 @@
-package v05;
+package v07;
 
 import util.Util;
 
-public class MainPhoneBook_v5 {
+public class MainPhoneBook_v07 {
 
 	public static void main(String[] args) {
-		Manager_v5 frenManager = Manager_v5.getInstance();
+		Manager_v07 frenManager = Manager_v07.getInstance();
 		
 		while(true) {
 			int choice = frenManager.startMenu();
@@ -17,11 +17,13 @@ public class MainPhoneBook_v5 {
 				System.out.println("정보가 성공적으로 저장되었습니다. ");
 				break;
 			case Util.SEARCH: 
+				System.out.println("기존정보를 검색합니다. ");
 				System.out.println("검색하고 싶은 사람의 이름을 입력해주세요. ");
 				frenManager.searchInfo();
 				break;
 			case Util.DELETE:
 				System.out.println("기존정보를 삭제합니다. ");
+				System.out.println("삭제하고 싶은 사람의 이름을 입력해주세요. ");
 				frenManager.searchDelete();
 				System.out.println("정보가 성공적으로 삭제되었습니다.");
 				break;

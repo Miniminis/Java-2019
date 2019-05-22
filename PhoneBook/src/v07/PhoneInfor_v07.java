@@ -1,4 +1,4 @@
-package v05;
+package v07;
 
 //메소드 명칭 규칙을 위한 인터페이스 생성 
 interface PhoneInforStorage {
@@ -7,13 +7,13 @@ interface PhoneInforStorage {
 }
 
 //PhoneInforStorage 인터페이스를 구현하고 있는 추상클래스 PhoneInfor_v5 
-public abstract class PhoneInfor_v5 implements PhoneInforStorage {
+public abstract class PhoneInfor_v07 implements PhoneInforStorage {
 		
 	//외부로부터 변수에 대한 직접접근을 막기 위한 private 제어자
 	private String name;
 	private String phoneNumber;	
 	
-	PhoneInfor_v5(String name, String phoneNumber) {
+	PhoneInfor_v07(String name, String phoneNumber) {
 		this.name = name;
 		this.phoneNumber = phoneNumber;
 	}
@@ -35,11 +35,29 @@ public abstract class PhoneInfor_v5 implements PhoneInforStorage {
 		return phoneNumber;
 	}
 	
+	//Hashcode 이용하여 데이터 분류기준 정의
+	//전화번호 마지막 자리수를 기준으로 10개의 그룹으로 분류 
+	@Override
+	public int hashCode() {
+		return phoneNumber.charAt(phoneNumber.length()-1);
+	}
+	
+	//동일데이터의 기준: 전화번호 --> equals 재정의 
+	@Override
+	public boolean equals(Object obj) {
+		PhoneInfor_v07 pInfo = (PhoneInfor_v07)obj;
+		if(pInfo.phoneNumber==phoneNumber) {
+			return true;
+		}else {
+			return false;
+		}
+	}
+	
 }
 
 //대학교 친구들 저장을 위한 클래스 생성 
 //기본정보를 PhoneInfor_v4 로부터 상속받음 
-class PhoneUnivInfor extends PhoneInfor_v5 {
+class PhoneUnivInfor extends PhoneInfor_v07 {
 	String address=null;
 	String email=null;
 	String major=null;
@@ -79,7 +97,7 @@ class PhoneUnivInfor extends PhoneInfor_v5 {
 }
 //회사 친구들 저장을 위한 클래스 생성 
 //기본정보를 PhoneInfor_v4 로부터 상속받음
-class PhoneCompanyInfor extends PhoneInfor_v5 {
+class PhoneCompanyInfor extends PhoneInfor_v07 {
 	String email=null;
 	String company=null;
 	
@@ -111,7 +129,7 @@ class PhoneCompanyInfor extends PhoneInfor_v5 {
 
 //가족 정보 저장을 위한 클래스 생성 
 //기본정보를 PhoneInfor_v4 로부터 상속받음
-class PhoneFamilyInfor extends PhoneInfor_v5{
+class PhoneFamilyInfor extends PhoneInfor_v07{
 	String bday=null;
 	
 	PhoneFamilyInfor(
