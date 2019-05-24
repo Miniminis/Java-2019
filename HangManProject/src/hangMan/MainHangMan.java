@@ -1,136 +1,173 @@
 package hangMan;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Scanner;
 
 public class MainHangMan {
 	
-	/* Çà¸Ç°ÔÀÓ
-	 * 0. °ÔÀÓ ½ÃÀÛ ¸Ş´º ÀÔ·Â È­¸é 
-	 * 1. »ç¿ëÀÚ ÃßÃø°ª ÀÔ·Â ¹× Á¤´ä È®ÀÎ 
-	 * 2. ÇÙ¸Ç Áö¿ì±â ¸Å¼­µå 
-	 * 3. °ÔÀÓ´Ü¾î ·£´ıµ¹¸®±â ¸Å¼­µå  */
+	/* í–‰ë§¨ê²Œì„
+	 * 0. ê²Œì„ ì‹œì‘ ë©”ë‰´ ì…ë ¥ í™”ë©´ 
+	 * 1. ì‚¬ìš©ìì˜ ë‹¨ì–´ ì¶”ì¸¡ê°’ ì…ë ¥ - ì •ë‹µë‹¨ì–´ì™€ ëŒ€ì¡°í•˜ì—¬ í™•ì¸
+	 * while ë°˜ë³µë¬¸: tryCntê°€ í–‰ë§¨ì˜ ì‹ ì²´ë¶€ìœ„ íšŸìˆ˜ë³´ë‹¤ ì‘ì„ë•Œê¹Œì§€ ë°˜ë³µ 
+	 * 1) ì…ë ¥char ê°€ ìˆìœ¼ë©´ --> "--a--" : ì´ˆê¸°ì— -ë¡œ í‘œì‹œë˜ì—ˆë˜ ë‹¨ì–´ì˜ ë¹ˆì¹¸ì´ í•´ë‹¹ ê¸€ìë¡œ 
+	 * ë°”ë€Œì–´ í‘œí˜„ë¨
+	 * - tryCnt --;
+	 * 2) ì…ë ¥ charê°€ ì—†ìœ¼ë©´ --> "-----" : ì…ë ¥í•˜ì‹  ë‹¨ì–´ê°€ ì—†ìŠµë‹ˆë‹¤. 
+	 * - í–‰ë§¨ì˜+bodyPart+ê°€ ì‚¬ë¼ì§‘ë‹ˆë‹¤. ë‚¨ì€ íšŸìˆ˜: --ë²ˆ //(ì‹œê°„ ìˆìœ¼ë©´: í–‰ë§¨ ê·¸ë¦¼ í‘œí˜„)  
+	 * - tryCnt--;
+	 * 2. í–‰ë§¨ ì§€ìš°ê¸° ë§¤ì„œë“œ
+	 * - ì˜¤ë‹µì¼ ë•Œ: í…ìŠ¤íŠ¸ë¡œ í–‰ë§¨ì˜ ì—†ì–´ì§„ ì‹ ì²´ë¶€ìœ„ í‘œì‹œ  (ì´í›„ ìˆ˜ì •: í–‰ë§¨ ê·¸ë¦¼ ìˆœì°¨ì ìœ¼ë¡œ ë„ìš°ê¸°)
+	 * -- ì˜¤ë‹µì¸ ê²½ìš°ì™€ í–‰ë§¨ ë§¤ì„œë“œ ì—°ê²°   
+	 * 3. ê²Œì„ë‹¨ì–´ ëœë¤ëŒë¦¬ê¸° ë§¤ì„œë“œ 
+	 * - ê²Œì„ ë‹¨ì–´ë¦¬ìŠ¤íŠ¸ - ë°°ì—´ë¡œ ì¼ë‹¨ ì €ì¥(ì™¸ë¶€ì—ì„œ ë¶ˆëŸ¬ì˜¬ ë°©ë²• ìˆìœ¼ë©´ ì¶”ê°€)
+	 * - ë°°ì—´ë¡œ ì €ì¥ëœ ë‹¨ì–´ ëœë¤ìœ¼ë¡œ ë½‘ì•„ì˜¤ê¸°  */
 	
 	public static void main(String[] args) {
 
 		int choice = startMenu();
 		
 		switch(choice) {
-		case 1: //ÃÊ±Ş
+		case 1: //ì´ˆê¸‰
 			easyLevel();
 			break;
-		case 2: //Áß±Ş
+		case 2: //ì¤‘ê¸‰
 			intermediateLevel();
 			break;
-		case 3: //°í±Ş 
+		case 3: //ê³ ê¸‰ 
 			advancedLevel();
 			break;
 		}
 
 	}
 	
-	//0. °ÔÀÓ ½ÃÀÛ ¸Ş´º ÀÔ·ÂÈ­¸é 
+	//0. ê²Œì„ ì‹œì‘ ë©”ë‰´ ì…ë ¥ í™”ë©´  
 	static int startMenu() {
-		String username="minhee"; //·Î±×ÀÎ ÆäÀÌÁö¿¡¼­ ÀÔ·Â°ª °¡Á®¿À±â  
-		System.out.println(username+"´Ô È¯¿µÇÕ´Ï´Ù*^^* ");
-		System.out.println("°ÔÀÓÀÇ ³­ÀÌµµ¸¦ ¼±ÅÃÇØÁÖ¼¼¿ä. ");
-		System.out.println("1) ÃÊ±Ş 2) Áß±Ş 3) °í±Ş");
+		String username="minhee"; //ë¡œê·¸ì¸ í˜ì´ì§€ì—ì„œ ì…ë ¥ê°’ ê°€ì ¸ì˜¤ê¸°
+		System.out.println(username+"ë‹˜ í™˜ì˜í•©ë‹ˆë‹¤*^^*  ");
+		System.out.println("ê²Œì„ì˜ ë‚œì´ë„ë¥¼ ì„ íƒí•´ì£¼ì„¸ìš”. ");
+		System.out.println("1) ì´ˆê¸‰ 2) ì¤‘ê¸‰ 3) ê³ ê¸‰");
 				
-		//»ç¿ëÀÚÀÇ ¸Ş´ºÀÔ·Â 
+		//ì‚¬ìš©ìì˜ ë©”ë‰´ì…ë ¥ 
 		Scanner sc = new Scanner(System.in);
 		int choice = sc.nextInt();
 		
 		return choice;
 	}
 	
-	//1. ÃÊ±Ş°ÔÀÓ 
+	//1. ì´ˆê¸‰
 	static void easyLevel() {
-		System.out.println("ÃÊ±Ş°ÔÀÓÀ» ½Ç½ÃÇÕ´Ï´Ù. ");
-		
-		String correctAnswer = "ant";
+		System.out.println("ì´ˆê¸‰ê²Œì„ì„ ì‹¤ì‹œí•©ë‹ˆë‹¤.");
+	
+		String correctAnswer = randomWord();
 		int tryCnt = 0;
 		
 		while(tryCnt<6) {
-			System.out.println("¼¼ ÀÚ¸® ¿µ¾î´Ü¾î¸¦ ¸ÂÃçÁÖ¼¼¿ä. ");
+			System.out.println("ì„¸ ìë¦¬ ì˜ì–´ë‹¨ì–´ë¥¼ ë§ì¶°ì£¼ì„¸ìš”. ");
+			
+			//ì‚¬ìš©ì ì…ë ¥ ì •ë‹µ: ë¬¸ìì—´ì¼ ê²½ìš° 
 			Scanner sc = new Scanner(System.in);
-			String answer = sc.nextLine();
+			String Stranswer = sc.nextLine();
+			
+			//ì‚¬ìš©ì ì…ë ¥ ì •ë‹µ: ë¬¸ìì¼ ê²½ìš°
+			Scanner ch = new Scanner(System.in);
+			int charAnswer = ch.nextInt();
+			
+			
 			
 			if(answer.length()==3 && answer.equals(correctAnswer)) {
-				System.out.println("´ç½ÅÀº ÃµÀç±º¿ä! Á¤´äÀÔ´Ï´Ù!!!");
+				System.out.println("ë‹¹ì‹ ì€ ì²œì¬êµ°ìš”! ì •ë‹µì…ë‹ˆë‹¤!!!");
 				break;
 			}else if (answer.length()==3 && !(answer.equals(correctAnswer))){
-				System.out.println("ÇÙ¸Ç ½ÅÃ¼ÀÇ ÀÏºÎºĞÀÌ »ç¶óÁı´Ï´Ù. ");
+				System.out.println("í•µë§¨ ì‹ ì²´ì˜ ì¼ë¶€ë¶„ì´ ì‚¬ë¼ì§‘ë‹ˆë‹¤. ");
 				tryCnt++;
-				System.out.println("³²Àº È½¼ö: "+(6-tryCnt));
-			}else { //ÀÔ·ÂµÈ ´Ü¾î°¡ ¼¼ ÀÚ¸®¼ö°¡ ¾Æ´Ñ °æ¿ì 
-				System.out.println("¿Ã¹Ù¸¥ ´Ü¾î¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä. ");
+				System.out.println("ë‚¨ì€ íšŸìˆ˜: "+(6-tryCnt));
+			}else { //ì…ë ¥ëœ ë‹¨ì–´ê°€ ì„¸ ìë¦¬ìˆ˜ê°€ ì•„ë‹Œ ê²½ìš°
+				System.out.println("ì˜¬ë°”ë¥¸ ë‹¨ì–´ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”. ");
 			}
 		}
-		System.out.println("°ÔÀÓÀÌ Á¾·áµË´Ï´Ù.");
+		System.out.println("ê²Œì„ì´ ì¢…ë£Œë©ë‹ˆë‹¤.");
 	}
 	
-	//2. Áß±Ş°ÔÀÓ 
+	//2. ì¤‘ê¸‰
 	static void intermediateLevel() {
-		System.out.println("Áß±Ş °ÔÀÓÀ» ½ÃÀÛÇÕ´Ï´Ù. ");
+		System.out.println("ï¿½ß±ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½. ");
 
 		String correctAnswer = "mouse";
 		int tryCnt = 0;
 		
 		while(tryCnt<6) {
 			
-			System.out.println("´Ù¼¸ ÀÚ¸® ÀÌ»óÀÇ ¿µ¾î´Ü¾î¸¦ ¸ÂÃçÁÖ¼¼¿ä. ");
+			System.out.println("ï¿½Ù¼ï¿½ ï¿½Ú¸ï¿½ ï¿½Ì»ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ü¾î¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½. ");
 			Scanner sc = new Scanner(System.in);
 			String answer = sc.nextLine();
 			
 			if(answer.length()>5 && answer.equals(correctAnswer)) {
-				System.out.println("´ç½ÅÀº ÃµÀç±º¿ä! Á¤´äÀÔ´Ï´Ù! ");
+				System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ Ãµï¿½ç±ºï¿½ï¿½! ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½! ");
 				break;
 			} else if (answer.length()>5 && !(answer.equals(correctAnswer))){
-				System.out.println("ÇÙ¸Ç ½ÅÃ¼ÀÇ ÀÏºÎºĞÀÌ »ç¶óÁı´Ï´Ù. ");
+				System.out.println("ï¿½Ù¸ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ÏºÎºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. ");
 				tryCnt++;
-				System.out.println("³²Àº È½¼ö: "+(6-tryCnt));
-			}else { //ÀÔ·ÂµÈ ´Ü¾î°¡ ´Ù¼¸ÀÚ¸® ´Ü¾î ÀÌÇÏÀÎ °æ¿ì 
-				System.out.println("¿Ã¹Ù¸¥ ´Ü¾î¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä. ");
+				System.out.println("ï¿½ï¿½ï¿½ï¿½ È½ï¿½ï¿½: "+(6-tryCnt));
+			}else { //ï¿½Ô·Âµï¿½ ï¿½Ü¾î°¡ ï¿½Ù¼ï¿½ï¿½Ú¸ï¿½ ï¿½Ü¾ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ 
+				System.out.println("ï¿½Ã¹Ù¸ï¿½ ï¿½Ü¾î¸¦ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½. ");
 			}
 		}
-		System.out.println("°ÔÀÓÀÌ Á¾·áµË´Ï´Ù.");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ë´Ï´ï¿½.");
 	}
 	
-	//3. »ó±Ş°ÔÀÓ 
+	//3. ê³ ê¸‰ 
 	static void advancedLevel() {
-		System.out.println("»ó±Ş °ÔÀÓÀ» ½ÃÀÛÇÕ´Ï´Ù. ");
+		System.out.println("ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Õ´Ï´ï¿½. ");
 		
 		String correctAnswer = "intermediate";
 		int tryCnt = 0;
 		
 		while(tryCnt<6) {
 			
-			System.out.println("¿­ ÀÚ¸®  ¿µ¾î´Ü¾î¸¦ ¸ÂÃçÁÖ¼¼¿ä. ");
+			System.out.println("ï¿½ï¿½ ï¿½Ú¸ï¿½  ï¿½ï¿½ï¿½ï¿½Ü¾î¸¦ ï¿½ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½. ");
 			Scanner sc = new Scanner(System.in);
 			String answer = sc.nextLine();
 			
 			if(answer.length()>10 && answer.equals(correctAnswer)) {
-				System.out.println("´ç½ÅÀº ÃµÀç±º¿ä! Á¤´äÀÔ´Ï´Ù! ");
+				System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ Ãµï¿½ç±ºï¿½ï¿½! ï¿½ï¿½ï¿½ï¿½ï¿½Ô´Ï´ï¿½! ");
 				break;
 			} else if (answer.length()>10 && !(answer.equals(correctAnswer))){
-				System.out.println("ÇÙ¸Ç ½ÅÃ¼ÀÇ ÀÏºÎºĞÀÌ »ç¶óÁı´Ï´Ù. ");
+				System.out.println("ï¿½Ù¸ï¿½ ï¿½ï¿½Ã¼ï¿½ï¿½ ï¿½ÏºÎºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½. ");
 				tryCnt++;
-				System.out.println("³²Àº È½¼ö: "+(6-tryCnt));
-			}else { //ÀÔ·ÂµÈ ´Ü¾î°¡ ¿­ÀÚ¸® ÀÌÇÏÀÎ °æ¿ì
-				System.out.println("¿Ã¹Ù¸¥ ´Ü¾î¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä. ");
+				System.out.println("ï¿½ï¿½ï¿½ï¿½ È½ï¿½ï¿½: "+(6-tryCnt));
+			}else { //ï¿½Ô·Âµï¿½ ï¿½Ü¾î°¡ ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½
+				System.out.println("ï¿½Ã¹Ù¸ï¿½ ï¿½Ü¾î¸¦ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½Ö¼ï¿½ï¿½ï¿½. ");
 			}
 		}
-		System.out.println("°ÔÀÓÀÌ Á¾·áµË´Ï´Ù.");
+		System.out.println("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ë´Ï´ï¿½.");
 		
 	}
 	
-	//Çà¸Ç Áö¿ì±â 
+	//í–‰ë§¨ ì§€ìš°ê¸° 
 	void deleteHangMan() {
-		
+		ArrayList<String> hangMan = new ArrayList<String>();
+		hangMan.add("ì™¼ìª½ë‹¤ë¦¬");
 		
 	}
 	
-	//°ÔÀÓ´Ü¾î ·£´ıµ¹¸®±â 
-	void randomWord() {
+	//ê²Œì„ë‹¨ì–´ ëœë¤ëŒë¦¬ê¸°  
+	static String randomWord() {
+		ArrayList<String> gameWord = new ArrayList<String>();
+		//ì„¸ìë¦¬ìˆ˜ ë‹¨ì–´ 
+		gameWord.add("ant");
+		gameWord.add("run");
+		gameWord.add("poo");
+		gameWord.add("app");
+		
+		Collections.shuffle(gameWord);
+	
+		String rdWord = gameWord.get(0);
+		return rdWord;
+	}
+	
+	//ìœ ì €-ê²Œì„í¬ì¸íŠ¸ ì €ì¥ ë©”ì„œë“œ 
+	void savePoint() {
 		
 	}
 
