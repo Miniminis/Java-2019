@@ -2,6 +2,41 @@ package hangMan;
 
 import util.Util;
 
+public class GameFlow {
+	public void gameProcess() {
+		GameManager gm = new GameManager();
+		
+		while(true) {
+			int choice = gm.startMenu();
+
+			switch(choice) {
+			case Util.EASY: 
+				System.out.println("초급게임을 시작합니다.");
+				gm.gameStart(3);
+				break;
+			case Util.INTERMEDIATE: 
+				System.out.println("중급게임을 시작합니다.");
+				gm.gameStart(5);
+				break;
+			case Util.ADVANCED: 
+				System.out.println("고급게임을 시작합니다.");
+				gm.gameStart(10);
+				break;
+			case Util.BACK: //뒤로가기
+				System.out.println("한 단계 뒤로갑니다.");
+				break;
+			default : //
+				System.out.println("적절한 선택을 해주세요. ");
+			}
+			
+			//뒤로가기
+			if(choice==Util.BACK) {
+				break;
+			}
+		}
+	}
+}
+
 /* 억울한 사형수를 살려라! (a.k.a. 행맨게임)
  * 0. 게임 시작 메뉴 입력 화면 
  * 1. 사용자의 단어 추측값 입력 - 정답단어와 대조하여 확인
@@ -33,26 +68,3 @@ import util.Util;
  * - 정답 단어 중에 한 글자 알려주기: String, charAt() 
  * 5. 점수측정  
  *   */
-
-public class GameFlow {
-	public void gameProcess() {
-		GameManager gm = new GameManager();
-
-		int choice = gm.startMenu();
-
-		switch(choice) {
-		case Util.EASY: 
-			System.out.println("초급게임을 시작합니다.");
-			gm.gameStart(3);
-			break;
-		case Util.INTERMEDIATE: 
-			System.out.println("중급게임을 시작합니다.");
-			gm.gameStart(5);
-			break;
-		case Util.ADVANCED: 
-			System.out.println("고급게임을 시작합니다.");
-			gm.gameStart(10);
-			break;
-		}
-	}
-}
