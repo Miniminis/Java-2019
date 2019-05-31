@@ -12,7 +12,7 @@ public class ByteFileCopy {
 		InputStream in = new FileInputStream("penguine.jpg");
 		OutputStream out = new FileOutputStream("copy.jpg");
 		
-		int copyByte=0; //전송된 사이드 카운트 
+		int copyByte=0; //전송된 사이즈카운트 
 		int bData=0; //스트림을 통해 전송되는 데이터: byte 
 		
 		int readLen=0; //byte 배열의 사이즈를 받음 
