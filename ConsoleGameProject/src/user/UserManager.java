@@ -259,7 +259,7 @@ public class UserManager {
 	
 
 	// 게임관리
-	public static void gameMain( String id) {
+	public static void gameMain(String id) {
 		int GameChoice=0;
 		while (true) {
 

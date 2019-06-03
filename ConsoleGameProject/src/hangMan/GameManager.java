@@ -21,16 +21,18 @@ public class GameManager extends UserManager{
 
 
 	// 0. 게임 시작 메뉴 입력 화면
-	public int startMenu(String id) {
+	public int startMenu() { //getId
 		
-		this.name = userinfo.get(id).getId();
-		this.point = userinfo.get(id).getScore();
+		/*
+		 * this.name = userinfo.get(id).getId(); this.point =
+		 * userinfo.get(id).getScore();
+		 */
 		
 		int choice = 0;
 		System.out.println("=====================================");
 		System.out.println("	      HangmanGame Menu");
 		System.out.println("=====================================");
-		System.out.println(id + " 님 환영합니다*^^*");
+		System.out.println("minhee" + " 님 환영합니다*^^*");
 		System.out.println("게임의 난이도를 선택해주세요.");
 		System.out.println("1) 초급 2) 중급 3) 고급 4) 뒤로가기");
 		System.out.println("=====================================");
@@ -49,14 +51,21 @@ public class GameManager extends UserManager{
 	void gameStart(int n) {
 
 		// random words 인스턴스 생성
-		RandomWords rdw = new RandomWords();
+		//RandomWords rdw = new RandomWords();
+		
+		//외부 text file 로부터 읽어들인 random words2 인스턴스 생성
+		RandomWords2 rdw2 = new RandomWords2();
 
-		String correctAnswer = rdw.randomWord(n); // 랜덤 키워드로부터 길이가 n인 정답단어 축출
-		char[] correctAnswerArray = correctAnswer.toCharArray(); // 단어의 각 알파벳 대조를 위해 char array 생성
-		char[] blank = new char[correctAnswerArray.length]; // 단어 자리수 표시를 위한 공백 array
-		for (int i = 0; i < correctAnswerArray.length; i++) {
-			blank[i] = '_';
-		}
+		/*
+		 * String correctAnswer = rdw.randomWord(n); // 랜덤 키워드로부터 길이가 n인 정답단어 축출 char[]
+		 * correctAnswerArray = correctAnswer.toCharArray(); // 단어의 각 알파벳 대조를 위해 char
+		 * array 생성 char[] blank = new char[correctAnswerArray.length]; // 단어 자리수 표시를 위한
+		 * 공백 array for (int i = 0; i < correctAnswerArray.length; i++) { blank[i] =
+		 * '_'; }
+		 */
+		
+		String correctAnswer = rdw2.randomWord(n);
+		
 
 		int failCnt = 0; // 유저의 오답 횟수
 

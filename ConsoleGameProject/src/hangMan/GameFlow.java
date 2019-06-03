@@ -3,20 +3,20 @@ package hangMan;
 import user.UserManager;
 
 public class GameFlow extends UserManager {
-	public static void gameProcess(String id) {
+	public static void gameProcess() {
 		
 		
 		GameManager gm = new GameManager();
 
 		
-		System.out.println(id + "님 게임을 선택해주세요. ");
+		System.out.println("minhee" + "님 게임을 선택해주세요. ");
 		
 	//	boolean check = false;
 		
 		
 		while(true) {
 		
-			int choice = gm.startMenu(id);
+			int choice = gm.startMenu();
 
 			switch(choice) {
 			case util.Menu.EASY: 
