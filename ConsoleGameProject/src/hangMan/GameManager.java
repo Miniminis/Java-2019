@@ -53,11 +53,11 @@ public class GameManager extends UserManager{
 		// random words 인스턴스 생성
 		//RandomWords rdw = new RandomWords();
 		
-		//외부 text file 로부터 읽어들인 random words2 인스턴스 생성
-		RandomWords2 rdw2 = new RandomWords2();
-
+		//update(2019.06.04): 외부 text file로부터 읽어들인 rdwUp 인스턴스 생성
+		RandomWordsUpdate rdwUp = new RandomWordsUpdate();
 		
-		String correctAnswer = rdw2.randomWord(n); // 랜덤 키워드로부터 길이가 n인 정답단어 축출 
+		
+		String correctAnswer = rdwUp.randomWord(n); // 랜덤 키워드로부터 길이가 n인 정답단어 축출 
 		char[] correctAnswerArray = correctAnswer.toCharArray(); // 단어의 각 알파벳 대조를 위해 char array 생성 
 		char[] blank = new char[correctAnswerArray.length]; // 단어 자리수 표시를 위한 공백 array 
 		for (int i = 0; i < correctAnswerArray.length; i++) { 

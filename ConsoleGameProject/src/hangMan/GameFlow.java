@@ -31,7 +31,7 @@ public class GameFlow extends UserManager {
 				break;
 			case util.Menu.ADVANCED: 
 				System.out.println("고급게임을 시작합니다.");
-				gm.gameStart(10);
+				gm.gameStart(7);
 				break;
 			case util.Menu.BACK: //뒤로가기
 				System.out.println("이전 메뉴로 돌아갑니다.");
