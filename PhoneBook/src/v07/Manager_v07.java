@@ -102,8 +102,7 @@ public class Manager_v07 {
 
 		Iterator<PhoneInfor_v07> itr = pbSet.iterator();
 		while(itr.hasNext()) {
-			
-			
+						
 		}
 		
 		/*

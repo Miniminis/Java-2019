@@ -8,7 +8,7 @@ public interface Util {
 	
 	////public static final 생략 
 	//Util interface에서 소속에 대한 상수설정 
-	int INSERT = 1, SEARCH = 2, DELETE = 3, EDITINFO = 4, ALLINFO=5, BASICINFO = 6, END = 7;
+	int INSERT = 1, SEARCH = 2, DELETE = 3, EDITINFO = 4, ALLINFO=5, BASICINFO = 6, SAVEINFO=7, END = 8;
 	
 	//Util interface에서 소속에 대한 상수설정 
 	int FMILY=1, UNIVERSITY=2, COMPANY=3;
