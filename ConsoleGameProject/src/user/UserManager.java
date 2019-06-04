@@ -1,5 +1,6 @@
 package user;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -43,7 +44,7 @@ public class UserManager {
 	}
 
 	// 메인
-	public static void mainMenu() {
+	public static void mainMenu() throws IOException {
 		while (true) {
 
 			int choice = printMainMenu();
@@ -72,7 +73,7 @@ public class UserManager {
 	}
 
 	// 로그인
-	public static void login() {
+	public static void login() throws IOException {
 
 		System.out.print("아이디   : ");
 		String id = Util.keyboard.nextLine();
@@ -147,7 +148,7 @@ public class UserManager {
 
 
 	// 서브메뉴관리
-	public static void subMain(String id) {
+	public static void subMain(String id) throws IOException {
 
 		while (true) {
 
@@ -203,7 +204,7 @@ public class UserManager {
 	}
 
 	// 회원수정
-	public static void updateInfo(String id) {
+	public static void updateInfo(String id) throws IOException {
 
 		System.out.println("이전 비밀번호를 입력해주세요.");
 	      System.out.println("이전화면으로 가려면 X입력");
@@ -229,7 +230,7 @@ public class UserManager {
 	}
 
 	// 내정보보기
-	public static void myInfo(String id) {
+	public static void myInfo(String id) throws IOException {
 		if (userinfo.get(id).getId().equals(id)) {
 
 	         System.out.println("아 이 디 : " + id);
@@ -259,7 +260,7 @@ public class UserManager {
 	
 
 	// 게임관리
-	public static void gameMain(String id) {
+	public static void gameMain(String id) throws IOException {
 		int GameChoice=0;
 		while (true) {
 
@@ -305,7 +306,7 @@ public class UserManager {
 	}
 
 	// 회원탈퇴
-	public static void deleteMember(String id) {
+	public static void deleteMember(String id) throws IOException {
 		System.out.println("회원탈퇴 하시겠습니까? (Y/N)");
 		String answer = Util.keyboard.nextLine();
 

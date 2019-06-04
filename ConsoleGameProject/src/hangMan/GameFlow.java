@@ -1,9 +1,11 @@
 package hangMan;
 
+import java.io.IOException;
+
 import user.UserManager;
 
 public class GameFlow extends UserManager {
-	public static void gameProcess() {
+	public static void gameProcess(String id) throws IOException {
 		
 		
 		GameManager gm = new GameManager();
@@ -16,7 +18,7 @@ public class GameFlow extends UserManager {
 		
 		while(true) {
 		
-			int choice = gm.startMenu();
+			int choice = gm.startMenu(id);
 
 			switch(choice) {
 			case util.Menu.EASY: 
