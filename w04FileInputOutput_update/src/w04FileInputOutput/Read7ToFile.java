@@ -1,3 +1,5 @@
+package w04FileInputOutput;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
